@@ -16,16 +16,37 @@ Git-Panic is an interactive, safety-first terminal assistant for common local Gi
 
 Git-Panic refuses to proceed during merge, rebase, cherry-pick, revert, or bisect operations; with unresolved conflicts; or when the local branch has diverged from its upstream. History-rewriting workflows also refuse to alter a commit already present upstream.
 
-## Install and run
+## Installation and Run
 
 Python 3.10 or newer and Git are required.
 
+### For Users (Recommended)
+The easiest way to install and run `git-panic` globally without modifying your system Python environment is using [`pipx`](https://pypa.github.io/pipx/):
+
 ```bash
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -e '.[dev]'
-git-panic
+pipx install git-panic
+git-panic --repo /path/to/repository
 ```
+
+If you ever need to uninstall or upgrade:
+```bash
+pipx uninstall git-panic
+pipx upgrade git-panic
+```
+
+### For Developers
+If you want to contribute, run local tests, or modify the source code:
+
+```bash
+git clone https://github.com/usemoslinux/git-panic.git
+cd git-panic
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+pytest
+```
+
+---
 
 Inspect a repository without executing recovery commands:
 
@@ -54,28 +75,3 @@ Safety branch creation can be explicitly disabled for one invocation. Git-Panic 
 ```bash
 git-panic --no-safety-branch
 ```
-
-## Development
-
-```bash
-python -m pip install -e '.[dev]'
-pytest
-```
-
-## Publishing
-
-Releases publish to PyPI through GitHub Actions OpenID Connect trusted publishing. No PyPI token is stored in this repository.
-
-Before the first release, configure a pending trusted publisher at <https://pypi.org/manage/account/publishing/>:
-
-| PyPI field | Value |
-| --- | --- |
-| PyPI Project Name | `git-panic` |
-| Owner | `usemoslinux` |
-| Repository name | `git-panic` |
-| Workflow name | `publish.yml` |
-| Environment name | `pypi` |
-
-In the GitHub repository, create an environment named `pypi` under **Settings > Environments**. Restrict its deployment access as appropriate. Then publish a GitHub release with a version tag matching `pyproject.toml`, such as `v0.1.0`. The `Publish to PyPI` workflow builds the source and wheel distributions, validates their metadata with Twine, and publishes them through the configured trusted publisher.
-
-The pending publisher does not reserve the PyPI name. Configure it before publishing, and confirm that `git-panic` is available on PyPI.
