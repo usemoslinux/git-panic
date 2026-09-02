@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "git-panic"
+version = "0.1.0"
+description = "A safety-first interactive assistant for recovering from common local Git mistakes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Git-Panic contributors" }]
+dependencies = [
+  "rich>=13.7,<15",
+  "typer>=0.12,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2,<9",
+]
+
+[project.scripts]
+git-panic = "git_panic.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/git_panic"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
