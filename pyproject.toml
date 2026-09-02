@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.25"]
+requires = ["hatchling>=1.25,<1.32"]
 build-backend = "hatchling.build"
 
 [project]
@@ -15,9 +15,16 @@ dependencies = [
   "typer>=0.12,<1",
 ]
 
+[project.urls]
+Homepage = "https://github.com/usemoslinux/git-panic"
+Repository = "https://github.com/usemoslinux/git-panic"
+Issues = "https://github.com/usemoslinux/git-panic/issues"
+
 [project.optional-dependencies]
 dev = [
+  "build>=1.2,<2",
   "pytest>=8.2,<9",
+  "twine>=5.1,<7",
 ]
 
 [project.scripts]

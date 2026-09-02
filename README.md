@@ -61,3 +61,21 @@ git-panic --no-safety-branch
 python -m pip install -e '.[dev]'
 pytest
 ```
+
+## Publishing
+
+Releases publish to PyPI through GitHub Actions OpenID Connect trusted publishing. No PyPI token is stored in this repository.
+
+Before the first release, configure a pending trusted publisher at <https://pypi.org/manage/account/publishing/>:
+
+| PyPI field | Value |
+| --- | --- |
+| PyPI Project Name | `git-panic` |
+| Owner | `usemoslinux` |
+| Repository name | `git-panic` |
+| Workflow name | `publish.yml` |
+| Environment name | `pypi` |
+
+In the GitHub repository, create an environment named `pypi` under **Settings > Environments**. Restrict its deployment access as appropriate. Then publish a GitHub release with a version tag matching `pyproject.toml`, such as `v0.1.0`. The `Publish to PyPI` workflow builds the source and wheel distributions, validates their metadata with Twine, and publishes them through the configured trusted publisher.
+
+The pending publisher does not reserve the PyPI name. Configure it before publishing, and confirm that `git-panic` is available on PyPI.
